@@ -74,7 +74,7 @@ main (int ac, char *ag[])
       len = EIBSendAPDU (con, 2, buf);
       if (len == -1)
 	die ("Request failed");
-      printf ("Send request\n");
+      printf ("%s", "Send request\n");
     }
   else if (strcmp (ag[0], "off") == 0)
     {
@@ -93,7 +93,7 @@ main (int ac, char *ag[])
       len = EIBSendAPDU (con, 2, buf);
       if (len == -1)
 	die ("Request failed");
-      printf ("Send request\n");
+      printf ("%s", "Send request\n");
     }
   else if (strcmp (ag[0], "write") == 0)
     {
@@ -132,7 +132,7 @@ main (int ac, char *ag[])
       len = EIBSendAPDU (con, 2, buf);
       if (len == -1)
 	die ("Request failed");
-      printf ("Send request\n");
+      printf ("%s", "Send request\n");
     }
   else if (strcmp (ag[0], "read") == 0)
     {
@@ -162,7 +162,7 @@ main (int ac, char *ag[])
 	    die ("Invalid Packet");
 	  if (buf[0] & 0x3 || (buf[1] & 0xC0) == 0xC0)
 	    {
-	      printf ("Error: Unknown APDU: ");
+	      printf ("%s", "Error: Unknown APDU: ");
 	      printHex (len, buf);
 	      printf ("\n");
 	    }
@@ -201,7 +201,7 @@ main (int ac, char *ag[])
 	  len = EIBGetAPDU_Src (con, sizeof (buf), buf, &src);
 	  if (len < 2 || buf[0] & 0x3 || (buf[1] & 0xC0) == 0xC0)
 	    {
-	      printf ("ERR");
+	      printf ("%s", "ERR");
 	      break;
 	    }
 	  else if ((buf[1] & 0xC0) == 0x40)
@@ -214,7 +214,7 @@ main (int ac, char *ag[])
 		    printf (ag[4]);
 		}
 	      else
-		printf ("ERR");
+		printf ("%s", "ERR");
 	      break;
 	    }
 	}
@@ -247,7 +247,7 @@ main (int ac, char *ag[])
 	    die ("Invalid Packet");
 	  if (buf[0] & 0x3 || (buf[1] & 0xC0) == 0xC0)
 	    {
-	      printf ("Error: Unknown APDU: ");
+	      printf ("%s", "Error: Unknown APDU: ");
 	      printHex (len, buf);
 	      printf ("\n");
 	    }
@@ -324,7 +324,7 @@ main (int ac, char *ag[])
 		      printf ("Read value %02X\n", buf[2]);
 		      if (buf[2] < idx * 2)
 			{
-			  printf ("Abort dim\n");
+			  printf ("%s", "Abort dim\n");
 			  EIBClose (con);
 			  return 0;
 			}
@@ -334,7 +334,7 @@ main (int ac, char *ag[])
 
 	    }
 	}
-      printf ("Dimmed up\n");
+      printf ("%s", "Dimmed up\n");
     }
   else if (strcmp (ag[0], "log") == 0)
     {
@@ -420,7 +420,7 @@ main (int ac, char *ag[])
 	  if (len == -1)
 	    die ("Read failed");
 	  printHex (len, buf);
-	  printf ("\n");
+	  printf ("%s", "\n");
 	}
     }
   else if (strcmp (ag[0], "groupcacheclear") == 0)
@@ -463,13 +463,13 @@ main (int ac, char *ag[])
       switch (buf[1] & 0xC0)
 	{
 	case 0x40:
-	  printf ("Response");
+	  printf ("%s", "Response");
 	  break;
 	case 0x80:
-	  printf ("Write");
+	  printf ("%s", "Write");
 	  break;
 	}
-      printf (" from ");
+      printf ("%s", " from ");
       printIndividual (src);
       if (buf[1] & 0xC0)
 	{
@@ -479,7 +479,7 @@ main (int ac, char *ag[])
 	  else
 	    printHex (len - 2, buf + 2);
 	}
-      printf ("\n");
+      printf ("%s", "\n");
     }
   else if (strcmp (ag[0], "groupcachereadsync") == 0)
     {
@@ -498,23 +498,23 @@ main (int ac, char *ag[])
       switch (buf[1] & 0xC0)
 	{
 	case 0x40:
-	  printf ("Response");
+	  printf ("%s", "Response");
 	  break;
 	case 0x80:
-	  printf ("Write");
+	  printf ("%s", "Write");
 	  break;
 	}
-      printf (" from ");
+      printf ("%s", " from ");
       printIndividual (src);
       if (buf[1] & 0xC0)
 	{
-	  printf (": ");
+	  printf ("%s", ": ");
 	  if (len == 2)
 	    printf ("%02X", buf[1] & 0x3F);
 	  else
 	    printHex (len - 2, buf + 2);
 	}
-      printf ("\n");
+      printf ("%s", "\n");
     }
   else if (strcmp (ag[0], "groupcacheremove") == 0)
     {
@@ -544,27 +544,27 @@ main (int ac, char *ag[])
 	    die ("Invalid Packet");
 	  if (buf[0] & 0x3 || (buf[1] & 0xC0) == 0xC0)
 	    {
-	      printf ("Unknown APDU from ");
+	      printf ("%s", "Unknown APDU from ");
 	      printIndividual (src);
-	      printf (": ");
+	      printf ("%s", ": ");
 	      printHex (len, buf);
-	      printf ("\n");
+	      printf ("%s", "\n");
 	    }
 	  else
 	    {
 	      switch (buf[1] & 0xC0)
 		{
 		case 0x00:
-		  printf ("Read");
+		  printf ("%s", "Read");
 		  break;
 		case 0x40:
-		  printf ("Response");
+		  printf ("%s", "Response");
 		  break;
 		case 0x80:
-		  printf ("Write");
+          printf ("%s", "Write");
 		  break;
 		}
-	      printf (" from ");
+	      printf ("%s", " from ");
 	      printIndividual (src);
 	      if (buf[1] & 0xC0)
 		{
@@ -574,7 +574,7 @@ main (int ac, char *ag[])
 		  else
 		    printHex (len - 2, buf + 2);
 		}
-	      printf ("\n");
+	      printf ("%s", "\n");
 	    }
 	}
     }
@@ -593,7 +593,7 @@ main (int ac, char *ag[])
       len = EIBSendAPDU (con, 2, buf);
       if (len == -1)
 	die ("Request failed");
-      printf ("Send request\n");
+      printf ("%s", "Send request\n");
     }
   else if (strcmp (ag[0], "groupreadresponse") == 0)
     {
@@ -611,7 +611,7 @@ main (int ac, char *ag[])
       len = EIBSendAPDU (con, 2, req_buf);
       if (len == -1)
 	die ("Request failed");
-      printf ("Send request\n");
+      printf ("%s", "Send request\n");
 
       while (1)
 	{
@@ -641,37 +641,37 @@ main (int ac, char *ag[])
 	    die ("Invalid Packet");
 	  if (buf[0] & 0x3 || (buf[1] & 0xC0) == 0xC0)
 	    {
-	      printf ("Unknown APDU from ");
+	      printf ("%s", "Unknown APDU from ");
 	      printIndividual (src);
-	      printf (": ");
+	      printf ("%s", ": ");
 	      printHex (len, buf);
-	      printf ("\n");
+          printf ("%s", "\n");
 	    }
 	  else
 	    {
 	      switch (buf[1] & 0xC0)
 		{
 		case 0x00:
-		  printf ("Read");
+		  printf ("%s", "Read");
 		  break;
 		case 0x40:
-		  printf ("Response");
+		  printf ("%s", "Response");
 		  break;
 		case 0x80:
-		  printf ("Write");
+		  printf ("%s", "Write");
 		  break;
 		}
-	      printf (" from ");
+	      printf ("%s", " from ");
 	      printIndividual (src);
 	      if (buf[1] & 0xC0)
 		{
-		  printf (": ");
+		  printf ("%s", ": ");
 		  if (len == 2)
 		    printf ("%02X", buf[1] & 0x3F);
 		  else
 		    printHex (len - 2, buf + 2);
 		}
-	      printf ("\n");
+	      printf ("%s", "\n");
 	      switch (buf[1] & 0xC0)
 		{
 		case 0x80:
@@ -699,7 +699,7 @@ main (int ac, char *ag[])
       len = EIBSendAPDU (con, 2 + len, lbuf);
       if (len == -1)
 	die ("Request failed");
-      printf ("Send request\n");
+      printf ("%s", "Send request\n");
     }
   else if (strcmp (ag[0], "groupsocketlisten") == 0)
     {
@@ -718,41 +718,41 @@ main (int ac, char *ag[])
 	    die ("Invalid Packet");
 	  if (buf[0] & 0x3 || (buf[1] & 0xC0) == 0xC0)
 	    {
-	      printf ("Unknown APDU from ");
+	      printf ("%s", "Unknown APDU from ");
 	      printIndividual (src);
-	      printf (" to ");
+	      printf ("%s", " to ");
 	      printGroup (dest);
-	      printf (": ");
+	      printf ("%s", ": ");
 	      printHex (len, buf);
-	      printf ("\n");
+	      printf ("%s", "\n");
 	    }
 	  else
 	    {
 	      switch (buf[1] & 0xC0)
 		{
 		case 0x00:
-		  printf ("Read");
+		  printf ("%s", "Read");
 		  break;
 		case 0x40:
-		  printf ("Response");
+		  printf ("%s", "Response");
 		  break;
 		case 0x80:
-		  printf ("Write");
+		  printf ("%s", "Write");
 		  break;
 		}
-	      printf (" from ");
+	      printf ("%s", " from ");
 	      printIndividual (src);
-	      printf (" to ");
+	      printf ("%s", " to ");
 	      printGroup (dest);
 	      if (buf[1] & 0xC0)
 		{
-		  printf (": ");
+		  printf ("%s", ": ");
 		  if (len == 2)
 		    printf ("%02X", buf[1] & 0x3F);
 		  else
 		    printHex (len - 2, buf + 2);
 		}
-	      printf ("\n");
+	      printf ("%s", "\n");
 	    }
 	}
     }
@@ -771,7 +771,7 @@ main (int ac, char *ag[])
       len = EIBSendGroup (con, dest, 2, buf);
       if (len == -1)
 	die ("Request failed");
-      printf ("Send request\n");
+      printf ("%s", "Send request\n");
     }
   else if (strcmp (ag[0], "groupsresponse") == 0)
     {
@@ -788,7 +788,7 @@ main (int ac, char *ag[])
       len = EIBSendAPDU (con, 2, lbuf);
       if (len == -1)
 	die ("Request failed");
-      printf ("Send request\n");
+      printf ("%s", "Send request\n");
     }
   else if (strcmp (ag[0], "groupswrite") == 0)
     {
@@ -805,7 +805,7 @@ main (int ac, char *ag[])
       len = EIBSendAPDU (con, 2, lbuf);
       if (len == -1)
 	die ("Request failed");
-      printf ("Send request\n");
+      printf ("%s", "Send request\n");
     }
   else if (strcmp (ag[0], "groupwrite") == 0)
     {
@@ -822,7 +822,7 @@ main (int ac, char *ag[])
       len = EIBSendAPDU (con, 2 + len, lbuf);
       if (len == -1)
 	die ("Request failed");
-      printf ("Send request\n");
+      printf ("%s", "Send request\n");
 
     }
   else if (strcmp (ag[0], "madcread") == 0)
@@ -945,9 +945,9 @@ main (int ac, char *ag[])
       if (len == -1)
 	die ("Set failed");
       if (len)
-	printf ("in programming mode\n");
+	printf ("%s", "in programming mode\n");
       else
-	printf ("not in programming mode\n");
+	printf ("%s", "not in programming mode\n");
 
     }
   else if (strcmp (ag[0], "mprogmodetoggle") == 0)
@@ -1068,16 +1068,16 @@ main (int ac, char *ag[])
     lp0:
       FD_ZERO (&read);
       FD_SET (EIB_Poll_FD (con), &read);
-      printf ("Waiting\n");
+      printf ("%s", "Waiting\n");
       if (select (EIB_Poll_FD (con) + 1, &read, 0, 0, 0) == -1)
 	die ("select failed");
-      printf ("Data available\n");
+      printf ("%s", "Data available\n");
       len = EIB_Poll_Complete (con);
       if (len == -1)
 	die ("Read failed");
       if (len == 0)
 	goto lp0;
-      printf ("Completed\n");
+      printf ("%s", "Completed\n");
 
       len = EIBComplete (con);
 
@@ -1114,9 +1114,9 @@ main (int ac, char *ag[])
 	die ("Connect failed");
       auth (con);
 
-      printf ("Write: ");
+      printf ("%s", "Write: ");
       printHex (len, buf);
-      printf ("\n");
+      printf ("%s", "\n");
       len =
 	EIB_MC_PropertyWrite (con, obj, prop, start, nr_of_elem, len, buf,
 			      sizeof (res), res);
@@ -1230,9 +1230,9 @@ main (int ac, char *ag[])
 	die ("Connect failed");
       auth (con);
 
-      printf ("Write: ");
+      printf ("%s", "Write: ");
       printHex (len, buf);
-      printf ("\n");
+      printf ("%s", "\n");
       len = EIB_MC_Write_Plain (con, addr, len, buf);
       if (len == -1)
 	die ("Write failed");
@@ -1268,9 +1268,9 @@ main (int ac, char *ag[])
       if (len == -1)
 	die ("Set failed");
       if (len)
-	printf ("in programming mode\n");
+	printf ("%s", "in programming mode\n");
       else
-	printf ("not in programming mode\n");
+	printf ("%s", "not in programming mode\n");
     }
   else if (strcmp (ag[0], "progmodetoggle") == 0)
     {
@@ -1294,9 +1294,9 @@ main (int ac, char *ag[])
 	die ("Read failed");
       for (i = 0; i < len; i += 2)
 	{
-	  printf ("Addr: ");
+	  printf ("%s", "Addr: ");
 	  printIndividual ((buf[i] << 8) | buf[i + 1]);
-	  printf ("\n");
+	  printf ("%s", "\n");
 	}
     }
   else if (strcmp (ag[0], "vbusmonitor1") == 0)
@@ -1332,16 +1332,16 @@ main (int ac, char *ag[])
 	lp1:
 	  FD_ZERO (&read);
 	  FD_SET (EIB_Poll_FD (con), &read);
-	  printf ("Waiting\n");
+	  printf ("%s", "Waiting\n");
 	  if (select (EIB_Poll_FD (con) + 1, &read, 0, 0, 0) == -1)
 	    die ("select failed");
-	  printf ("Data available\n");
+	  printf ("%s", "Data available\n");
 	  len = EIB_Poll_Complete (con);
 	  if (len == -1)
 	    die ("Read failed");
 	  if (len == 0)
 	    goto lp1;
-	  printf ("Completed\n");
+	  printf ("%s", "Completed\n");
 
 	  len = EIBGetBusmonitorPacket (con, sizeof (buf), buf);
 	  if (len == -1)
@@ -1364,7 +1364,7 @@ main (int ac, char *ag[])
 	  if (len == -1)
 	    die ("Read failed");
 	  printHex (len, buf);
-	  printf ("\n");
+	  printf ("%s", "\n");
 	}
     }
   else if (strcmp (ag[0], "writeaddress") == 0)
