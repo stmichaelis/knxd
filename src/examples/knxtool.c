@@ -209,9 +209,9 @@ main (int ac, char *ag[])
 	      if (len == 2)
 		{
 		  if (buf[1] & 0x3F)
-            printf ("%c", ag[3]);
+            printf ("%s", ag[3]);
 		  else if (ac == 5)
-            printf ("%c", ag[4]);
+            printf ("%s", ag[4]);
 		}
 	      else
 		printf ("%s", "ERR");
