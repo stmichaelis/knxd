@@ -26,7 +26,7 @@
 
 #define FT12CEMI_URL "ft12cemi:/dev/ttySx\n"
 #define FT12CEMI_DOC "ft12cemi connects over a serial line with the FT1.2 Protocol to a Boas module\n\n"
-#define FT12CEMI_PREFIX "ft12"
+#define FT12CEMI_PREFIX "ft12cemi"
 #define FT12CEMI_CREATE ft12cemi_Create
 
 inline Layer2Ptr 
