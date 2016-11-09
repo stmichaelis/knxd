@@ -531,7 +531,7 @@ EIBnetServer::handle_packet (EIBNetIPPacket *p1, EIBNetIPSocket *isock)
 	r2.services.add (d);
       if (!GetSourceAddress (&r1.caddr, &r2.caddr))
 	goto out;
-      r2.caddr.sin_port = Port;
+      r2.caddr.sin_port = mcast->maddr.sin_port;
       isock->Send (r2.ToPacket (), r1.caddr);
       goto out;
     }
