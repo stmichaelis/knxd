@@ -17,32 +17,22 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-#ifdef HAVE_FT12
-  L2_NAME (FT12)
-  L2_NAME (FT12CEMI)
-#endif
-#ifdef HAVE_EIBNETIP
-  L2_NAME (EIBNETIP)
-#endif
-#ifdef HAVE_EIBNETIPTUNNEL
-  L2_NAME (EIBNETIPTUNNEL)
-  L2_NAME (EIBNETIPTUNNELNAT)
-#endif
-#ifdef HAVE_PEI16s
-  L2_NAME (PEI16s)
-#endif
-#ifdef HAVE_TPUARTs
-  L2_NAME (TPUARTs)
-#endif
-#ifdef HAVE_USB
-  L2_NAME (USB)
-#endif
+#ifndef C_FT12CEMI_H
+#define C_FT12CEMI_H
 
-#ifdef HAVE_NCN5120
-  L2_NAME(NCN5120)
-#endif
+#include "ft12.h"
+#include "cemi.h"
+#include "layer3.h"
 
-#ifdef HAVE_DUMMY
-  L2_NAME(DUMMY)
-#endif
+#define FT12CEMI_URL "ft12cemi:/dev/ttySx\n"
+#define FT12CEMI_DOC "ft12cemi connects over a serial line with the FT1.2 Protocol to a Boas module\n\n"
+#define FT12CEMI_PREFIX "ft12"
+#define FT12CEMI_CREATE ft12cemi_Create
 
+inline Layer2Ptr 
+ft12cemi_Create (const char *dev, L2options *opt)
+{
+  return std::shared_ptr<CEMILayer2>(new CEMILayer2 (new FT12LowLevelDriver (dev, opt->t), opt));
+}
+
+#endif

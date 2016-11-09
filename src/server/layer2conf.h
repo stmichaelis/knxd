@@ -24,6 +24,7 @@
 
 #ifdef HAVE_FT12
 #include "b-FT12.h"
+#include "b-FT12cemi.h"
 #endif
 #ifdef HAVE_EIBNETIP
 #include "b-EIBNETIP.h"
